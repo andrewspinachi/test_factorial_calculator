@@ -1,13 +1,15 @@
 package com.hostelworld.cucumber.pageobject;
 
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class PageObjectFactory {
+@Getter
+public class ApplicationPage {
 
-    WebDriver driver;
+    protected final WebDriver driver;
 
-    public PageObjectFactory(WebDriver driver) {
+    public ApplicationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

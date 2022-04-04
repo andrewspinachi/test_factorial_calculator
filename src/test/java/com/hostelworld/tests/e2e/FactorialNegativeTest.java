@@ -1,6 +1,6 @@
 package com.hostelworld.tests.e2e;
 
-import com.hostelworld.BaseFactorialTest;
+import com.hostelworld.tests.BaseFactorialTest;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.jupiter.api.Disabled;

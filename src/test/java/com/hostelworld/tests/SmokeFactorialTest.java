@@ -1,4 +1,4 @@
-package com.hostelworld;
+package com.hostelworld.tests;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;

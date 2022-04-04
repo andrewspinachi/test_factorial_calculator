@@ -1,6 +1,9 @@
-package com.hostelworld.cucumber.context;
+package com.hostelworld.ui.context;
 
-import io.cucumber.messages.Messages;
+import io.cucumber.java.Scenario;
+import lombok.Getter;
+import lombok.Setter;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -9,7 +12,10 @@ import java.util.Map;
 @Service
 public class ScenarioContext {
 
-    private Messages.GherkinDocument.Feature.Scenario scenario;
+    @Getter
+    @Setter
+    private Scenario scenario;
+
     private Map<Context, Object> data = new HashMap<>();
 
     public void saveData(Context key, Object value) {
@@ -20,12 +26,7 @@ public class ScenarioContext {
         return this.data.get(key);
     }
 
-    public String getScenarioName() {
-        return scenario.getName();
-    }
-
     public void resetContext() {
         data.clear();
     }
-
 }
