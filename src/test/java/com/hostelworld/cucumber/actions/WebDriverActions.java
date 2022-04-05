@@ -25,26 +25,14 @@ public class WebDriverActions {
         WebDriverActions.webDriverProperties = webDriverProperties;
     }
 
-    public static void waitForElementDisplayed(By selector) {
-        Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofMillis(webDriverProperties.getDisplayTimeout()))
-                .pollingEvery(Duration.ofMillis(webDriverProperties.getPollingInterval()))
-                .ignoring(NoSuchElementException.class)
-                // IE throws org.openqa.selenium.WebDriverException: Returned value cannot be converted to WebElement:
-                // {message=An element could not be located on the page using the given search parameters., error=no such element}
-                .ignoring(WebDriverException.class)
-                .ignoring(StaleElementReferenceException.class);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(selector));
-    }
-
     public static void waitForElementDisplayed(WebElement element) {
-        waitForElementDisplayed(element, 10);
+        waitForElementDisplayed(element, webDriverProperties.getDisplayTimeout());
     }
 
     public static void waitForElementDisplayed(WebElement element, int timeoutMillis) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(timeoutMillis))
-                .pollingEvery(Duration.ofSeconds(3))
+                .withTimeout(Duration.ofMillis(webDriverProperties.getDisplayTimeout()))
+                .pollingEvery(Duration.ofMillis(webDriverProperties.getPollingInterval()))
                 .ignoring(NoSuchElementException.class)
                 // IE throws org.openqa.selenium.WebDriverException: Returned value cannot be converted to WebElement:
                 // {message=An element could not be located on the page using the given search parameters., error=no such element}
@@ -54,7 +42,7 @@ public class WebDriverActions {
     }
 
     public static Boolean isDisplayed(WebElement element) {
-        return isDisplayed(element, 10);
+        return isDisplayed(element, webDriverProperties.getDisplayTimeout());
     }
 
     public static Boolean isDisplayed(WebElement element, int timeoutMillis) {
@@ -116,12 +104,6 @@ public class WebDriverActions {
         return element.getText();
     }
 
-    public static String getAttribute(WebElement element, String attribute) {
-        waitForElementDisplayed(element);
-
-        return element.getAttribute(attribute);
-    }
-
     public static void populate(WebElement element, CharSequence value) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofMillis(webDriverProperties.getClickTimeout()))
@@ -136,25 +118,6 @@ public class WebDriverActions {
         log.info("Populating [{}] with [{}]", element, value);
         element.clear();
         element.sendKeys(value);
-    }
-
-    public static boolean checkIfRefreshed(WebElement element) {
-        try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofMillis(webDriverProperties.getRefreshTimeout()))
-                    .pollingEvery(Duration.ofMillis(webDriverProperties.getPollingInterval()))
-                    .ignoring(NoSuchElementException.class)
-                    //IE throws org.openqa.selenium.WebDriverException: Returned value cannot be converted to WebElement:
-                    // {message=An element could not be located on the page using the given search parameters., error=no such element}
-                    .ignoring(WebDriverException.class);
-            wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(element)));
-            log.info("Element is refreshed on page: [{}]", element);
-        } catch (TimeoutException e) {
-            log.info("Element is NOT refreshed on page: [{}]", element);
-            return false;
-        }
-
-        return true;
     }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static com.hostelworld.junit.assertions.RestCustomAssertions.assertThat;
 import static com.hostelworld.ui.context.Context.PAGE;
+import static com.hostelworld.ui.context.Context.RESULT;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,13 +30,12 @@ public class StepDefinition extends BaseSteps {
 
     private static final String EFFECTIVE_URL = "http://qainterview.pythonanywhere.com/factorial";
 
-
     public StepDefinition(WebDriver driver, ScenarioContext scenarioContext,
                           CucumberConfiguration cucumberConfiguration) {
         super(driver, scenarioContext, cucumberConfiguration);
     }
 
-    @Given("^user acceses factorial calculator webapp")
+    @Given("^user accesses factorial calculator webapp")
     public void factorialCalculatorExists() {
         driver.get(EFFECTIVE_URL);
         log.info("Opening URL: {}", EFFECTIVE_URL);
@@ -52,23 +52,30 @@ public class StepDefinition extends BaseSteps {
     }
 
     @When("^user clicks calculate factorial button")
-    public void userClicksCalculate() throws InterruptedException {
+    public void userClicksCalculate() {
 
         FactorialAppPage page = (FactorialAppPage) scenarioContext.getData(PAGE);
-        page.calulateFacorial();
-        scenarioContext.saveData(PAGE, page);
+        assertTrue(page.calulateFacorial(), "Calculate button has been clicked");
 
     }
 
-    @Then("^a result is displyed on the screen with following result")
-    public void aResultIsDisplyedOnTheScreenWithFollowingMessage(String message) throws InterruptedException {
+    @Then("^a result is displayed on the screen with following result")
+    public void aResultIsDisplayedOnTheScreenWithFollowingMessage(String message) throws InterruptedException {
         FactorialAppPage page = (FactorialAppPage) scenarioContext.getData(PAGE);
-//        assertTrue(page.checkIfPopUpIsDisplayed(), "The Pop-up with result message appear on the page");
-//
 
         page.checkIfPopUpIsDisplayed();
         assertThat("The result is correct", page.getMessageText(), is("The factorial of 5 is: 120"));
 
+        scenarioContext.saveData(RESULT, page);
+
     }
 
+    @Then("a result is displayed on the screen with following error message")
+    public void aResultIsDisplayedOnTheScreenWithFollowingErrorMessage(String message) throws InterruptedException {
+
+        FactorialAppPage page = (FactorialAppPage) scenarioContext.getData(PAGE);
+
+        page.checkIfPopUpIsDisplayed();
+        assertThat("Error message is displayed", page.getMessageText(), is("Please enter an integer"));
+    }
 }

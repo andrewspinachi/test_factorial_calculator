@@ -7,8 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
-
 import static com.hostelworld.cucumber.actions.WebDriverActions.*;
 
 @Getter
@@ -47,6 +45,7 @@ public class FactorialAppPage extends ApplicationPage {
     public boolean calulateFacorial() {
         if (isClickable(factorialButton)) {
             factorialButton.click();
+            return  true;
         }
         return false;
     }

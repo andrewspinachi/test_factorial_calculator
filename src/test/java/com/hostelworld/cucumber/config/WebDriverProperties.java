@@ -19,9 +19,6 @@ public class WebDriverProperties {
 
     private int popupDisplayTimeout;
 
-    private int dropdownSelectTimeout;
-
     private int clickTimeout;
 
-    private int refreshTimeout;
 }
