@@ -4,6 +4,7 @@ import com.hostelworld.tests.BaseFactorialTest;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -38,9 +39,10 @@ public class FactorialPositiveTest extends BaseFactorialTest {
 
     }
 
+    @Tag("#BUG3")
+    @Disabled("Generates 500 Internal Server Error")
     @DisplayName("Calculate factorial of large number: 1000")
     @Test
-    @Disabled("Generates 500 Internal Server Error")
     public void factorialOfLargeNumberTest200() {
 
         Response response = given()
