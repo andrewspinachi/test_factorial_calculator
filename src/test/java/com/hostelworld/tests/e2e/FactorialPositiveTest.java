@@ -1,10 +1,10 @@
 package com.hostelworld.tests.e2e;
 
-import com.hostelworld.BaseFactorialTest;
+import com.hostelworld.tests.BaseFactorialTest;
 import io.restassured.response.Response;
-import org.junit.Test;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -31,7 +31,7 @@ public class FactorialPositiveTest extends BaseFactorialTest {
 
         Integer results = Integer.valueOf(result);
 
-        assertAll( // check the advantages of assert all
+        assertAll(
                 () -> assertThatStatusCodeIs(response, SC_OK),
                 () -> assertThatResponseBody("contains result", response, "answer", is(results))
         );
@@ -41,14 +41,14 @@ public class FactorialPositiveTest extends BaseFactorialTest {
     @DisplayName("Calculate factorial of large number: 1000")
     @Test
     @Disabled("Generates 500 Internal Server Error")
-    public void fatorialOfLargeNumberTest200() {
+    public void factorialOfLargeNumberTest200() {
 
         Response response = given()
                 .body(format(readResource(REQUEST_PATH_TXT), 1000))
                 .contentType(CONTENT_TYPE)
                 .post(BASE_ENDPOINT);
 
-        assertAll( // check the advantages of assert all
+        assertAll(
                 () -> assertThatStatusCodeIs(response, SC_OK),
                 () -> assertThatResponseBody("contains result", response, "answer", is("4.0238726 E+2567"))
         );
@@ -64,7 +64,7 @@ public class FactorialPositiveTest extends BaseFactorialTest {
                 .contentType(CONTENT_TYPE)
                 .post(BASE_ENDPOINT);
 
-        assertAll( // check the advantages of assert all
+        assertAll(
                 () -> assertThatStatusCodeIs(response, SC_OK),
                 () -> assertThatResponseBody("contains result", response, "answer", is(notNullValue()))
         );
@@ -90,7 +90,7 @@ public class FactorialPositiveTest extends BaseFactorialTest {
 
             } else
                 assertThatStatusCodeIs(response, SC_OK);
-                logger.info("Test passed with next input: {}", number);
+            logger.info("Test passed with next input: {}", number);
         }
 
     }

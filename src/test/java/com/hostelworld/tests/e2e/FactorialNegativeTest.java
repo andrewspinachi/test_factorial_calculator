@@ -1,10 +1,11 @@
 package com.hostelworld.tests.e2e;
 
-import com.hostelworld.BaseFactorialTest;
+import com.hostelworld.tests.BaseFactorialTest;
 import io.restassured.response.Response;
-import org.junit.Test;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -13,7 +14,6 @@ import static com.hostelworld.junit.utils.FileUtils.readResource;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.*;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class FactorialNegativeTest extends BaseFactorialTest {
 
@@ -26,11 +26,10 @@ public class FactorialNegativeTest extends BaseFactorialTest {
                 .contentType(CONTENT_TYPE)
                 .post(BASE_ENDPOINT);
 
-        assertAll( // check the advantages of assert all
-                () -> assertThatStatusCodeIs(response, SC_INTERNAL_SERVER_ERROR)
-        );
+        assertThatStatusCodeIs(response, SC_INTERNAL_SERVER_ERROR);
     }
 
+    @Tag("#BUG1")
     @ParameterizedTest(name = "Test factorial with valid data with spaces {0}")
     @CsvSource({"5   ", "    5", "  33  "})
     @Disabled("Potential Bug - most probably spaces are ignored when sending request with sample html body text")
@@ -55,7 +54,6 @@ public class FactorialNegativeTest extends BaseFactorialTest {
 
         assertThatStatusCodeIs(response, SC_INTERNAL_SERVER_ERROR);
 
-
     }
 
     @DisplayName("PUT method not allowed")
@@ -71,6 +69,7 @@ public class FactorialNegativeTest extends BaseFactorialTest {
 
     }
 
+    @Tag("#BUG2")
     @Disabled // Fails with Internal Server Error - 500 - it could be a potential defect
     @DisplayName("Send Invalid request body - 400 Bad Request")
     @Test

@@ -1,0 +1,28 @@
+please check disabled tests with potential bugs in FactorialNegativeTest.java
+
+#BUG1 - Send values with spaces in request body
+
+Preconditions:
+1.Postman application to be installed and configured
+
+Steps to reproduce:
+ 1.Create a POST request with the next endpoint: "http://qainterview.pythonanywhere.com/factorial" - and header content-type: application/x-www-form-urlencoded; charset=UTF-8
+ 2.In request body send "number=5  "
+
+Actual:   Response status is 200 - Success
+Expcted:  Response status code should be 400 - Bad Request
+
+============
+
+#BUG2 - Send invalid request body return 500 Internal Server error
+
+Preconditions:
+1.Postman application to be installed and configured
+
+Steps to reproduce:
+ 1.Create a POST request with the next endpoint: "http://qainterview.pythonanywhere.com/factorial" - and header content-type: application/x-www-form-urlencoded; charset=UTF-8
+ 2.In request body send "InvalidREquestBody"
+
+Actual:   Response status is 500 - Internal Server error
+Expcted:  Response status code should be 400 - Bad Request
+

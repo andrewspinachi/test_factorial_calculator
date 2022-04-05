@@ -1,4 +1,4 @@
-package com.hostelworld;
+package com.hostelworld.tests;
 
 public class BaseFactorialTest {
 

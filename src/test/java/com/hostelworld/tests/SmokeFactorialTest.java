@@ -1,7 +1,7 @@
-package com.hostelworld;
+package com.hostelworld.tests;
 
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static com.hostelworld.junit.assertions.RestCustomAssertions.logger;
 import static io.restassured.RestAssured.when;
@@ -28,8 +28,6 @@ public class SmokeFactorialTest {
                 .then()
                 .statusCode(200);
 
-        logger.info("Test passed");
-
     }
 
     @Test
@@ -45,8 +43,6 @@ public class SmokeFactorialTest {
                 .statusCode(200)
                 .and()
                 .assertThat().body("answer", equalTo(120));
-
-        logger.info("Answer is correct");
 
     }
 }
